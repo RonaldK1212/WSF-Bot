@@ -71,20 +71,15 @@ client = MyClient()
 tree = app_commands.CommandTree(client)
 
 # Define a command for the command tree
-
-
 @tree.command(name="gay", description="Command description.", guild=guild)
 async def commandName(interaction: discord.Interaction, member: discord.Member = None):
     # Send a message when the command is used
     await interaction.response.send_message("Matthew")
 
-# Define another command for the command tree
-
-
-@tree.command(name="les", description="Command description.", guild=guild)
+@tree.command(name="Translator", description="Command description.", guild=guild)
 async def commandName(interaction: discord.Interaction, member: discord.Member = None):
     # Send a message when the command is used
-    await interaction.response.send_message("Matthew")
+    await interaction.response.send_message("Work in progress!!!")
 
 # Run the client with the bot token from the environment variables
 client.run(os.getenv('BOT_TOKEN'))

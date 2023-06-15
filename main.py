@@ -45,12 +45,22 @@ class MyClient(discord.Client):
         # Generate a random number
         x = random.randint(1, 100)
 
-        # If the bot is mentioned and GPT is enabled, generate a response using GPT
+        # If the bot is mentioned and GPT is enabled
         if client.user in message.mentions and config.gpt_enabled:
-            response, _, _ = gpt.send_message(message.content)
+            # If the message is a reply to the bot's message
+            if message.reference and message.reference.resolved.author == self.user:
+                assistant_message = {"role": "assistant",
+                                     "content": message.reference.resolved.content}
+                user_message = {"role": "user", "content": message.content}
+                response, _, _ = gpt.send_message(
+                    [assistant_message, user_message], model="gpt-4")
+            else:
+                user_message = {"role": "user", "content": message.content}
+                response, _, _ = gpt.send_message(
+                    [user_message], model="gpt-4")
             await message.channel.send(response)
-        # If the random number is less than or equal to 10, reply with a random slur
-        elif x <= 7:
+        # If the random number is less than or equal to 3, reply with a random slur
+        elif x <= 3:
             await message.reply(random.choice(slurs))
 
 

@@ -1,3 +1,3 @@
 # Bot Config
 
-gpt_enabled = False
+gpt_enabled = True

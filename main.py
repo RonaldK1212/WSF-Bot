@@ -50,7 +50,7 @@ class MyClient(discord.Client):
             response, _, _ = gpt.send_message(message.content)
             await message.channel.send(response)
         # If the random number is less than or equal to 10, reply with a random slur
-        elif x <= 10:
+        elif x <= 7:
             await message.reply(random.choice(slurs))
 
 

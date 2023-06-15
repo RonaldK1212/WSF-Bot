@@ -9,6 +9,29 @@
 		"ayre bsettak",
 		"my dick in your grandmother",
 		"1/10 chance for me to slur, 9/10 chance for you to suck on deez nuts",
-		"someone kick this kid please"
+		"someone kick this kid please",
+		"wahyet emme NEYKAK"
+	],
+	"targeted_slurs": [
+		{
+			"member_id": "",
+			"member_name": "",
+			"slurs": []
+		},
+		{
+			"member_id": "",
+			"member_name": "",
+			"slurs": []
+		},
+		{
+			"member_id": "",
+			"member_name": "",
+			"slurs": []
+		},
+		{
+			"member_id": "",
+			"member_name": "",
+			"slurs": []
+		}
 	]
 }

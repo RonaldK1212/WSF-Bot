@@ -86,10 +86,29 @@ async def commandName(interaction: discord.Interaction, member: discord.Member =
     await interaction.response.send_message("Matthew")
 
 
-@tree.command(name="Translator", description="Command description.", guild=guild)
-async def commandName(interaction: discord.Interaction, member: discord.Member = None):
-    # Send a message when the command is used
-    await interaction.response.send_message("Work in progress!!!")
+@tree.command(name="translator", description="Command description.", guild=guild)
+async def commandName(interaction: discord.Interaction, word: str, description: str = "yes"):
+    # Load the translator data from the JSON file
+    with open("translator.json") as file:
+        translator_data = json.load(file)
+    
+    # Search for the selected word in the translator data
+    translation = None
+    for entry in translator_data["translator"]:
+        if entry["arabic"] == word:
+            translation = entry["english"]
+            break
+    
+    # Prepare the response message
+    response = translation
+    if description == "yes":
+        for entry in translator_data["translator"]:
+            if entry["arabic"] == word:
+                response += " " + entry["description"]
+                break
+    
+    # Send the response message
+    await interaction.response.send_message(response)
 
 
 # Run the client with the bot token from the environment variables

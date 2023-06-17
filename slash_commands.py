@@ -1,9 +1,8 @@
 # Import necessary libraries
-import os
-import sys
 import json
 import discord
 from discord import app_commands
+import funcs
 
 # Gay Command
 def gay(interaction: discord.Interaction):
@@ -14,7 +13,7 @@ def gay(interaction: discord.Interaction):
 def translator(interaction: discord.Interaction, word: str, description: str = "yes"):
     try:
         # Open and load the translator.json file
-        with open(os.path.join(sys.path[0], "translator.json")) as f:
+        with open(funcs.get_path("translator.json")) as f:
             translator_data = json.load(f)
 
         # Search for the selected word in the translator data
@@ -52,7 +51,7 @@ def translator(interaction: discord.Interaction, word: str, description: str = "
 
 def load_translator_data():
     # Load the JSON data from the file
-    with open(os.path.join(sys.path[0], "translator.json")) as f:
+    with open(funcs.get_path("translator.json")) as f:
         translator_data = json.load(f)
 
     # Extract the values of the "arabic" strings

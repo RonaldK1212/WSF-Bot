@@ -1,40 +1,21 @@
-# Import necessary libraries
+# Import necessary libraries# Import necessary libraries
 import os
-import sys
-import json
 import discord
 from discord import app_commands
 import config
+import funcs
 import message_sender
 import slash_commands
 
 # Get the guild ID from the environment variables
 guild = discord.Object(id=os.getenv("GUILD_ID"))
 
-
-# Get all the users names using their ID
-def initialize_user_dict():
-    try:
-        with open(os.path.join(sys.path[0], "users.json")) as f:
-            users_file = json.load(f)
-            users = users_file["users"]
-        users_dict = {}
-        for user in users:
-            users_dict[int(user["member_id"])] = user["member_name"]
-        return users_dict
-
-    except FileNotFoundError:
-        print("Error: Users file not found.")
-    except PermissionError:
-        print("Error: Insufficient permissions to access the slurs file.")
-
-
 # Define a custom client class
 class MyClient(discord.Client):
     def __init__(self):
         super().__init__(intents=discord.Intents.default())
         self.synced = False
-        self.users_dict = initialize_user_dict()
+        self.users_dict = funcs.initialize_user_dict()
         self.user_id_of_last_message = None
         self.number_of_spammed_messages = 0
 

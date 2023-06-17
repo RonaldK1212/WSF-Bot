@@ -1,10 +1,9 @@
 # Import necessary libraries
-import os
-import sys
 import json
 import random
 import gpt
 import config
+import funcs
 
 # ChatGPT reply function
 async def send_chatgpt_reply(client, message):
@@ -38,7 +37,7 @@ async def send_random_slur(client, user_id, message):
     if random_number <= reply_chance:
         try:
             # Open and load the slurs.json file
-            with open(os.path.join(sys.path[0], "slurs.json")) as f:
+            with open(funcs.get_path("slurs.json")) as f:
                 slurs_file = json.load(f)
                 slurs = slurs_file["slurs"]
             reply = random.choice(slurs)

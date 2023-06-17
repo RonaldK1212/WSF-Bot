@@ -4,6 +4,7 @@ import random
 import gpt
 import config
 import funcs
+import logger
 
 # ChatGPT reply function
 async def send_chatgpt_reply(client, message):
@@ -44,20 +45,8 @@ async def send_random_slur(client, user_id, message):
             await message.reply(reply)
             
             # Logging the stats
-            user_name = client.users_dict[user_id]
-            slur_reply_log = (
-                "**Slur reply log:**\n"
-                f"Replied with **'{reply}'** to **'{user_name}'**\n"
-                f"Random number: {random_number}\n"
-                f"Reply chance: {base_chance} + {increment} * {client.number_of_spammed_messages - 1} = {reply_chance}%\n"
-                f"Messages sent before replying: {client.number_of_spammed_messages}\n"
-                "------------------------------------------"
-            )
-            # Access the global logging channel ID
-            logging_channel = client.get_channel(config.logging_channel_id)
-            if logging_channel:
-                await logging_channel.send(slur_reply_log)
-                
+            logger.slur_reply_log(client, user_id, reply, random_number, base_chance, increment, reply_chance)
+                   
         except FileNotFoundError:
             await message.channel.send("Error: Slurs file not found.")
         except PermissionError:

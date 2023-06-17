@@ -10,19 +10,13 @@ import gpt
 # Get the guild ID from the environment variables
 guild = discord.Object(id=os.getenv("GUILD_ID"))
 
-# Open and load the slurs.json file
-with open("slurs.json") as f:
-    slurs_file = json.load(f)
-slurs = slurs_file["slurs"]
-
-
 # Define a custom client class
 class MyClient(discord.Client):
     def __init__(self):
         # Initialize the client with the default intents
         super().__init__(intents=discord.Intents.default())
         self.synced = False
-        self.consecutive_messages = 0
+        self.user_message = {}
 
     async def startup(self):
         # Wait until the client is ready
@@ -42,14 +36,11 @@ class MyClient(discord.Client):
         if message.author == self.user:
             return
 
-        # Generate a random number
-        x = random.randint(1, 100)
-
-        # If the bot is mentioned and GPT is enabled
+        # Get the user ID of the current message
+        user_id = message.author.id
+        
+        # ChatGPT reply
         if client.user in message.mentions and config.gpt_enabled:
-            # Reset the consecutive message count if the bot replies
-            self.consecutive_messages = 0
-            
             # If the message is a reply to the bot's message
             if message.reference and message.reference.resolved.author == self.user:
                 assistant_message = {"role": "assistant", "content": message.reference.resolved.content}
@@ -59,18 +50,45 @@ class MyClient(discord.Client):
                 user_message = {"role": "user","content": message.content}
                 response, _, _ = gpt.send_message([user_message], model="gpt-4")
             await message.channel.send(response)
+        
+        
+        # Random slur reply
+        # Check if the user ID exists in the dictionary, if not, initialize the count to 0
+        if user_id not in self.user_message:
+            self.user_message[user_id] = 0
+
+        # If the user ID of the previous message is different, reset the consecutive message count
+        previous_user_id = message.channel.last_message.author.id if message.channel.last_message else None
+        if previous_user_id == user_id:
+            # Increment the consecutive message count for the current user
+            self.user_message[user_id] += 1
+        
+        # Generate a random number
+        random_number = random.randint(1, 100)
+
+        # Randomness variables
+        base_chance = 1
+        increment = 3
+        reply_chance = base_chance + increment * (self.user_message[user_id] - 1)
 
         # If the random number is less than or equal to the current chance, reply with a random slur
-        elif x <= (3 + 5 * self.consecutive_messages): # 3% base + 5% per message
+        if random_number <= reply_chance:
+            # Open and load the slurs.json file
+            with open("WSF-Bot\\slurs.json") as f:
+                slurs_file = json.load(f)
+            slurs = slurs_file["slurs"]
             await message.reply(random.choice(slurs))
             
-            # Increase the consecutive message count
-            self.consecutive_messages += 1
-
-        else:
-            # Reset the consecutive message count
-            self.consecutive_messages = 0
-
+            # Close the slurs.json file
+            f.close()
+            
+            # Reset the messages count for the user
+            self.user_message[user_id] = 0
+            
+        
+        # Reset the dictionary if 2 different people are talking
+        if len(self.user_message) > 1:
+            self.user_message = {}
 
 # Create an instance of the custom client
 client = MyClient()
@@ -78,25 +96,24 @@ client = MyClient()
 # Create a command tree for the client
 tree = app_commands.CommandTree(client)
 
-
-# Define a command for the command tree
+# Gay command
 @tree.command(name="gay", description="Command description.", guild=guild)
 async def commandName(interaction: discord.Interaction, member: discord.Member = None):
     # Send a message when the command is used
     await interaction.response.send_message("Matthew")
 
-
+# Translator command
 @tree.command(name="translator", description="Command description.", guild=guild)
 async def commandName(interaction: discord.Interaction, word: str, description: str = "yes"):
-    # Load the translator data from the JSON file
-    with open("translator.json") as file:
-        translator_data = json.load(file)
+    # Open and load the translator.json file
+    with open("WSF-Bot\\translator.json") as f:
+        translator_data = json.load(f)
     
     # Search for the selected word in the translator data
     translation = None
     for entry in translator_data["translator"]:
         if entry["arabic"] == word:
-            translation = entry["english"]
+            translation = f'**Arabic:** *{entry["arabic"]}*\n**English:** *{entry["english"]}*'
             break
     
     # Prepare the response message
@@ -104,12 +121,13 @@ async def commandName(interaction: discord.Interaction, word: str, description: 
     if description == "yes":
         for entry in translator_data["translator"]:
             if entry["arabic"] == word:
-                response += " " + entry["description"]
+                response += "\n\n" + entry["description"]
                 break
     
     # Send the response message
     await interaction.response.send_message(response)
-
+    # Close the translator.json file
+    f.close()
 
 # Run the client with the bot token from the environment variables
 client.run(os.getenv("BOT_TOKEN"))

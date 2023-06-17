@@ -24,8 +24,3 @@ def send_message(messages, system=system_message, model="gpt-3.5-turbo"):
         messages=messages
     )
     return completion.choices[0].message.content, completion.usage.prompt_tokens, completion.usage.completion_tokens
-
-
-# content, _, _ = send_message("write me a python code that finds the nth fibonacci number")
-
-# print(content)

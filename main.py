@@ -11,9 +11,9 @@ import gpt
 # Get the guild ID from the environment variables
 guild = discord.Object(id=os.getenv("GUILD_ID"))
 
-def initialize_user_dict(file = "users.json"):
+def initialize_user_dict():
     try:
-        with open(os.path.join(sys.path[0], file)) as f:
+        with open(os.path.join(sys.path[0], "users.json")) as f:
             users_file = json.load(f)
             users = users_file["users"]
         return users
@@ -29,7 +29,7 @@ class MyClient(discord.Client):
         # Initialize the client with the default intents
         super().__init__(intents=discord.Intents.default())
         self.synced = False
-        self.users_dict = initialize_user_dict("users.json")    
+        self.users_dict = initialize_user_dict()    
         self.user_id_of_last_message = None
         self.number_of_spammed_messages = 0
 
@@ -63,7 +63,6 @@ class MyClient(discord.Client):
 
         # Get the user ID of the current message
         user_id = message.author.id
-        user_name = self.users_dict[user_id]
         
         # ChatGPT reply
         if client.user in message.mentions and config.gpt_enabled:
@@ -108,6 +107,7 @@ class MyClient(discord.Client):
                 await message.reply(reply)
                 
                 # Logging the stats
+                user_name = self.users_dict[user_id]
                 print(f"Replied with '{reply}' to '{user_name}'")
                 print("Stats:")
                 print(f"Random number: {random_number}")

@@ -55,7 +55,7 @@ class MyClient(discord.Client):
                 print(f"Bot is now logging to channel {logging_channel_id}")
                 print('-----------------------------------')
 
-                running_message = f"**Alyssa started running :bee_happy: \nSession logs:**"
+                running_message = f"**Alyssa started running :beeHappy: \nSession logs:**"
                 # Access the global logging channel ID
                 logging_channel = self.get_channel(logging_channel_id)
                 if logging_channel:
@@ -102,7 +102,7 @@ class MyClient(discord.Client):
         random_number = random.randint(1, 100)
 
         # Randomness variables
-        base_chance = 100
+        base_chance = 1
         increment = 2
         reply_chance = base_chance + increment * (self.number_of_spammed_messages - 1)
 
@@ -120,7 +120,7 @@ class MyClient(discord.Client):
                 user_name = self.users_dict[user_id]
                 slur_reply_log = (
                     "**Slur reply log:**\n"
-                    f"Replied with '{reply}' to '{user_name}'\n"
+                    f"Replied with **'{reply}'** to **'{user_name}'**\n"
                     "Stats:\n"
                     f"Random number: {random_number}\n"
                     f"Messages sent: {self.number_of_spammed_messages}\n"

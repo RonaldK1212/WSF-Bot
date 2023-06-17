@@ -16,7 +16,10 @@ def initialize_user_dict():
         with open(os.path.join(sys.path[0], "users.json")) as f:
             users_file = json.load(f)
             users = users_file["users"]
-        return users
+        users_dict = {}
+        for user in users:
+            users_dict[int(user["member_id"])] = user["member_name"]
+        return users_dict
         
     except FileNotFoundError:
         print("Error: Users file not found.")
@@ -109,10 +112,9 @@ class MyClient(discord.Client):
                 # Logging the stats
                 user_name = self.users_dict[user_id]
                 print(f"Replied with '{reply}' to '{user_name}'")
-                print("Stats:")
                 print(f"Random number: {random_number}")
-                print(f"Messages sent: {self.user_message[user_id]}")
-                print(f"Reply chance: {base_chance} + {increment} * {self.user_message[user_id] - 1} = {reply_chance}%")
+                print(f"Reply chance: {base_chance} + {increment} * {self.number_of_spammed_messages - 1} = {reply_chance}%")
+                print(f"Number of spam messages sent before replying: {self.number_of_spammed_messages}")
                 print("------------------------------------------")
                  
             except FileNotFoundError:

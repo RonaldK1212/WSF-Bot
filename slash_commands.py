@@ -1,13 +1,18 @@
 # Import necessary libraries
 import json
+
 import discord
-from discord import app_commands
 import funcs
+from discord import app_commands
+
 
 # Gay Command
 def gay(interaction: discord.Interaction):
     # Send a message when the command is used
-    return interaction.response.send_message(f"Hey {interaction.user.mention} Matthew is gay :matthew:")
+    return interaction.response.send_message(
+        f"Hey {interaction.user.mention} Matthew is gay :matthew:"
+    )
+
 
 # Translator command
 def translator(interaction: discord.Interaction, word: str, description: str = "yes"):
@@ -49,20 +54,27 @@ def translator(interaction: discord.Interaction, word: str, description: str = "
             "Error: Word not found in the translator data."
         )
 
+
 def load_translator_data():
     # Load the JSON data from the file
     with open(funcs.get_path("translator.json")) as f:
         translator_data = json.load(f)
 
     # Extract the values of the "arabic" strings
-    word_choices = [item['arabic'] for item in translator_data['translator']]
+    word_choices = [item["arabic"] for item in translator_data["translator"]]
     word_data = []
     for choice in word_choices:
-        word_data.append(app_commands.Choice(name = choice, value = str(word_choices.index(choice))))
-    
+        word_data.append(
+            app_commands.Choice(name=choice, value=str(word_choices.index(choice)))
+        )
+
     description_choices = ["yes", "no"]
     description_data = []
     for choice in description_choices:
-        description_data.append(app_commands.Choice(name = choice, value = str(description_choices.index(choice))))
-    
+        description_data.append(
+            app_commands.Choice(
+                name=choice, value=str(description_choices.index(choice))
+            )
+        )
+
     return (word_data, description_data)

@@ -1,29 +1,29 @@
 {
-    "translator":[
-        {
-            "arabic": "ayre",
-            "english": "my dick",
-            "description": "Similar words: er, zaber, zebb. \nCan be used in conjunction with the word 'b/bi' to curse someone or someone's family/belongings: \n- ayre fik (fuck you) \n- ayre b chaklak (fuck your looks) \n- ayre b emmak (fuck your mom) \nCan also be used to express shock, disgust, frustration, disappointment: \n- w er / w zaber (what the fuck) \n- ayre b zabre (fuck me *lit. my dick in my dick*)"
-        },
-        {
-            "arabic": "kess",
-            "english": "pussy",
-            "description": "Similar words: ott, zaber, zebb. \nCan be used to curse someone's female relatives, mainly the mother or the sister: \n- Mother: kess emmak (fuck your mom) \n- Sister: kess ekhtak (fuck your sister). \nCan also be used to describe someone as a pussy: chou hal kess/kesseye (what a pussy). \nCan also be used to express frustration: \n- KESSS (FUCKKK). \n*Note: use at your own risk because cursing someone's mother or sister can backfire really hard.*"
-        },
-        {
-            "arabic": "ayre fik",
-            "english": "fuck you (lit. my dick inside you)",
-            "description": "Common way to express various emotions: \n- Anger: ayre fik (fuck you) \n- Annoyance: khalas ayre fik ya zalame (fuck off) \n- Excitement: HAHAHAHAH AYRE FIK (love you) \n- Praise: ayre fik chou awe (you're insane)"
-        },
-        {
-            "arabic": "moss / moss ayre",
-            "english": "suck / suck my dick",
-            "description": "Can be used in several contexts mainly to tell someone to shut up. \nCan also be used as masmis / masmse (male / female respectively)"
-        },
-        {
-            "arabic": "words",
-            "english": "Words to use in this format: ayre b ... / kess ekht ... / kess emm ...",
-            "description": "**Family:** \n- Father -> bayyak, abouk, weldak \n- Mother -> emmak, ommak, weledtak \n- Brother -> khayyak, akhouk \n- Sister -> ekhtak \n- Grandfather -> jeddak \n- Grandmother -> settak \n- Uncle -> 3ammak, khelak \n- Aunt -> 3ammtak, kheltak \n- Parents -> ahlak \n- Kids -> wledak \n- Family -> 3ayltak \n- Lineage -> sliltak \n- Generation: jilak \n**Body Parts:** \n- Brain, Head -> mokhak, dmeghak \n- Face -> wejjak \n- Eye, Eyes -> 3aynak, 3younak \n- Nose -> mnekhirak \n- Mouth -> temmak, ni3ak \n- Boob -> bezzak  \n- Looks -> chaklak \n- Insides -> msarinak \n- Dick -> ayrak \n- Balls -> baydatak \n- Pussy -> kessak, ottak, attouchak \n- Ass -> tizak \n- Hole -> bokhchak \n**Belongings:** \n- God -> rabbak \n- Glasses -> 3waynetak \n- Cleverness -> zakek \n- Stupidity -> habalak, baheltak \n- Blindness -> 3amek \n- Illiteracy -> ommiytak \n- Disgustingness -> arafak, jayytak \n**Exotic Combos:** \n- Eye's asshole-> bokhch tiz 3aynak \n- Grandfather's Grandmother's Sister's Eye -> 3en ekht sett jeddak \n\n*Note: '-ak' suffix is for males. Replace with '-ik' if talking to a female \nExample: ayre b habalak (male recipient) / ayre b habalik (female recipient)*"
-        }
-    ]
+  "translator": [
+    {
+      "arabic": "ayre",
+      "english": "my dick",
+      "description": "Similar words: er, zaber, zebb. \nCan be used in conjunction with the word 'b/bi' to curse someone or someone's family/belongings: \n- ayre fik (fuck you) \n- ayre b chaklak (fuck your looks) \n- ayre b emmak (fuck your mom) \nCan also be used to express shock, disgust, frustration, disappointment: \n- w er / w zaber (what the fuck) \n- ayre b zabre (fuck me *lit. my dick in my dick*)"
+    },
+    {
+      "arabic": "kess",
+      "english": "pussy",
+      "description": "Similar words: ott, zaber, zebb. \nCan be used to curse someone's female relatives, mainly the mother or the sister: \n- Mother: kess emmak (fuck your mom) \n- Sister: kess ekhtak (fuck your sister). \nCan also be used to describe someone as a pussy: chou hal kess/kesseye (what a pussy). \nCan also be used to express frustration: \n- KESSS (FUCKKK). \n*Note: use at your own risk because cursing someone's mother or sister can backfire really hard.*"
+    },
+    {
+      "arabic": "ayre fik",
+      "english": "fuck you (lit. my dick inside you)",
+      "description": "Common way to express various emotions: \n- Anger: ayre fik (fuck you) \n- Annoyance: khalas ayre fik ya zalame (fuck off) \n- Excitement: HAHAHAHAH AYRE FIK (love you) \n- Praise: ayre fik chou awe (you're insane)"
+    },
+    {
+      "arabic": "moss / moss ayre",
+      "english": "suck / suck my dick",
+      "description": "Can be used in several contexts mainly to tell someone to shut up. \nCan also be used as masmis / masmse (male / female respectively)"
+    },
+    {
+      "arabic": "words",
+      "english": "Words to use in this format: ayre b ... / kess ekht ... / kess emm ...",
+      "description": "**Family:** \n- Father -> bayyak, abouk, weldak \n- Mother -> emmak, ommak, weledtak \n- Brother -> khayyak, akhouk \n- Sister -> ekhtak \n- Grandfather -> jeddak \n- Grandmother -> settak \n- Uncle -> 3ammak, khelak \n- Aunt -> 3ammtak, kheltak \n- Parents -> ahlak \n- Kids -> wledak \n- Family -> 3ayltak \n- Lineage -> sliltak \n- Generation: jilak \n**Body Parts:** \n- Brain, Head -> mokhak, dmeghak \n- Face -> wejjak \n- Eye, Eyes -> 3aynak, 3younak \n- Nose -> mnekhirak \n- Mouth -> temmak, ni3ak \n- Boob -> bezzak  \n- Looks -> chaklak \n- Insides -> msarinak \n- Dick -> ayrak \n- Balls -> baydatak \n- Pussy -> kessak, ottak, attouchak \n- Ass -> tizak \n- Hole -> bokhchak \n**Belongings:** \n- God -> rabbak \n- Glasses -> 3waynetak \n- Cleverness -> zakek \n- Stupidity -> habalak, baheltak \n- Blindness -> 3amek \n- Illiteracy -> ommiytak \n- Disgustingness -> arafak, jayytak \n**Exotic Combos:** \n- Eye's asshole-> bokhch tiz 3aynak \n- Grandfather's Grandmother's Sister's Eye -> 3en ekht sett jeddak \n\n*Note: '-ak' suffix is for males. Replace with '-ik' if talking to a female \nExample: ayre b habalak (male recipient) / ayre b habalik (female recipient)*"
+    }
+  ]
 }

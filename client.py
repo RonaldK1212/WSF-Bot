@@ -1,14 +1,15 @@
 # Import necessary libraries
-import discord
-from discord import app_commands
 import config
-import logger
+import discord
 import funcs
+import logger
 import message_sender
 import slash_commands
+from discord import app_commands
 
 # Get the guild ID from the environment variables
-guild = discord.Object(id = config.guild_id)
+guild = discord.Object(id=config.guild_id)
+
 
 # Define a custom client class
 class MyClient(discord.Client):
@@ -42,7 +43,7 @@ class MyClient(discord.Client):
     async def on_message(self, message):
         # Get the user ID of the current message
         user_id = message.author.id
-        
+
         # Ignore messages sent by the bot itself
         if message.author == self.user:
             return
@@ -62,19 +63,25 @@ client = MyClient()
 # Create a command tree for the client
 tree = app_commands.CommandTree(client)
 
+
 # Gay command
 @tree.command(name="gay", description="Find out who is gay", guild=guild)
 async def gay(interaction: discord.Interaction):
     await slash_commands.gay(interaction)
-    
+
+
 # Translator command
-@tree.command(name="translator", description="Translate from Arabic to English", guild=guild)
-@app_commands.choices(word = slash_commands.load_translator_data()[0]) # words data
-@app_commands.choices(description = slash_commands.load_translator_data()[1]) # description data
-#@app_commands.autocomplete(word = slash_commands.word_autocompletion)
+@tree.command(
+    name="translator", description="Translate from Arabic to English", guild=guild
+)
+@app_commands.choices(word=slash_commands.load_translator_data()[0])  # words data
+@app_commands.choices(
+    description=slash_commands.load_translator_data()[1]
+)  # description data
+# @app_commands.autocomplete(word = slash_commands.word_autocompletion)
 async def translator(
     interaction: discord.Interaction,
     word: app_commands.Choice[str],
-    description: app_commands.Choice[str]
+    description: app_commands.Choice[str],
 ):
     await slash_commands.translator(interaction, word.name, description.name)

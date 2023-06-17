@@ -1,160 +1,160 @@
 {
-	"slurs": [
-		"ayre fik",
-		"ayre b settak",
-		"ekhtak",
-		"settak",
-		"kol khara",
-		"sakkir ni3ak b chabbou2 khara w dghat",
-		"moss",
-		"ok khalas moss",
-		"tab moss ayre fik chou hmar",
-		"bro b rabbak moss",
-		"ayre fik chou hmar",
-		"ayre b baheltak",
-		"meche hbb",
-		"braaaaa vooooo",
-		"wahyet emme NEYKAK",
-		"chou ra2yak tekoul baydate",
-		"bla3 baydate",
-		"kol emmak",
-		"rda3",
-		"jda3o",
-		"3e22o",
-		"btentek? b kessak eh?",
-		"ayre fik chou btentek xD",
-		"lek btentek la2?",
-		"ayre b chramitak",
-		"ommak tallaga",
-		"noss bezzik bayen ya bent l charmouta",
-		"nice NPC bro",
-		"combo mwafa2",
-		"bla3 baydte l chmel",
-		"ok bas metel ayre",
-		"la ayre saraha",
-		"metel ayre saraha",
-		"metel ayre bro",
-		"eh w cha2le",
-		"nikna",
-		"marid ent",
-		"ayre b maradak",
-		"skot ya zenje",
-		"khalas fhemna sed ni3ak",
-		"eh w er",
-		"w er",
-		"w zaber",
-		"bala manyake",
-		"7lofff",
-		"d3asle 3a otte w elle notte",
-		"khalas fek 3an erna",
-		"fek 3an erna b zyede",
-		"tawachet allah",
-		"ayre fik chou btehke ya zalame",
-		"7ada yo2rto kaff he",
-		"deyi2 chawrabit l snen?",
-		"UwU",
-		"anh",
-		"stfu",
-		"deal",
-		"faggot",
-		"bro shut up",
-		"bro im boutta pull out the N-Word",
-		"WHO TF ARE YOU LMAOOO",
-		"my dick in your grandmother",
-		"1/10 chance for me to slur, 9/10 chance for you to suck on deez nuts",
-		"someone kick this kid please",
-		"keep talking and you'll have a sibling in 9 months",
-		"I thought Matthew was the most retarded but you're making me second guess myself...",
-		"the world doesn't revolve around you bro stfu",
-		"cool story but who asked lol",
-		"8 billion people and im here stuck with you :sleeping:",
-		"they say im a bot, but like look at you bro xD",
-		"legit room temperature IQ",
-		"jew nigger jew nigger jew nigger",
-		"I think it would be better if you leave the server bitch",
-		"OOGA BOOGA :monkey_face:",
-		"sky ginger",
-		"bro kys fr",
-		"ZESTYYY BESTYYY :matthew:",
-		"I'm gonna Sett ult flash your pussy into the wall",
-		"you've been off your meds for too long now",
-		"YOU GO GURLLL YAAASSS SLAYYY QUEEN"
-	],
-	"targeted_slurs": [
-		{
-			"member_id": "196921346838626313",
-			"member_name": "alain",
-			"slurs": []
-		},
-		{
-			"member_id": "560120652376440843",
-			"member_name": "ari",
-			"slurs": []
-		},
-		{
-			"member_id": "476071384993366032",
-			"member_name": "dia",
-			"slurs": []
-		},
-		{
-			"member_id": "379652658732204032",
-			"member_name": "elie",
-			"slurs": []
-		},
-		{
-			"member_id": "202771481174736896",
-			"member_name": "georges",
-			"slurs": []
-		},
-		{
-			"member_id": "877113420204343316",
-			"member_name": "helly",
-			"slurs": []
-		},
-		{
-			"member_id": "408628759181393932",
-			"member_name": "ilinca",
-			"slurs": []
-		},
-		{
-			"member_id": "263727783300038657",
-			"member_name": "maria",
-			"slurs": []
-		},
-		{
-			"member_id": "197438411357945860",
-			"member_name": "mario",
-			"slurs": []
-		},
-		{
-			"member_id": "618830352349134885",
-			"member_name": "moe",
-			"slurs": []
-		},
-		{
-			"member_id": "710991674201079901",
-			"member_name": "mathieu",
-			"slurs": []
-		},
-		{
-			"member_id": "195854110845566976",
-			"member_name": "ronald",
-			"slurs": []
-		},
-		{
-			"member_id": "202829170764414976",
-			"member_name": "roy",
-			"slurs": []
-		},
-		{
-			"member_id": "643765574815711233",
-			"member_name": "vicky",
-			"slurs": []
-		},
-		{
-			"member_id": "443062770737610753",
-			"member_name": "youssef",
-			"slurs": []
-		}
-	]
+  "slurs": [
+    "ayre fik",
+    "ayre b settak",
+    "ekhtak",
+    "settak",
+    "kol khara",
+    "sakkir ni3ak b chabbou2 khara w dghat",
+    "moss",
+    "ok khalas moss",
+    "tab moss ayre fik chou hmar",
+    "bro b rabbak moss",
+    "ayre fik chou hmar",
+    "ayre b baheltak",
+    "meche hbb",
+    "braaaaa vooooo",
+    "wahyet emme NEYKAK",
+    "chou ra2yak tekoul baydate",
+    "bla3 baydate",
+    "kol emmak",
+    "rda3",
+    "jda3o",
+    "3e22o",
+    "btentek? b kessak eh?",
+    "ayre fik chou btentek xD",
+    "lek btentek la2?",
+    "ayre b chramitak",
+    "ommak tallaga",
+    "noss bezzik bayen ya bent l charmouta",
+    "nice NPC bro",
+    "combo mwafa2",
+    "bla3 baydte l chmel",
+    "ok bas metel ayre",
+    "la ayre saraha",
+    "metel ayre saraha",
+    "metel ayre bro",
+    "eh w cha2le",
+    "nikna",
+    "marid ent",
+    "ayre b maradak",
+    "skot ya zenje",
+    "khalas fhemna sed ni3ak",
+    "eh w er",
+    "w er",
+    "w zaber",
+    "bala manyake",
+    "7lofff",
+    "d3asle 3a otte w elle notte",
+    "khalas fek 3an erna",
+    "fek 3an erna b zyede",
+    "tawachet allah",
+    "ayre fik chou btehke ya zalame",
+    "7ada yo2rto kaff he",
+    "deyi2 chawrabit l snen?",
+    "UwU",
+    "anh",
+    "stfu",
+    "deal",
+    "faggot",
+    "bro shut up",
+    "bro im boutta pull out the N-Word",
+    "WHO TF ARE YOU LMAOOO",
+    "my dick in your grandmother",
+    "1/10 chance for me to slur, 9/10 chance for you to suck on deez nuts",
+    "someone kick this kid please",
+    "keep talking and you'll have a sibling in 9 months",
+    "I thought Matthew was the most retarded but you're making me second guess myself...",
+    "the world doesn't revolve around you bro stfu",
+    "cool story but who asked lol",
+    "8 billion people and im here stuck with you :sleeping:",
+    "they say im a bot, but like look at you bro xD",
+    "legit room temperature IQ",
+    "jew nigger jew nigger jew nigger",
+    "I think it would be better if you leave the server bitch",
+    "OOGA BOOGA :monkey_face:",
+    "sky ginger",
+    "bro kys fr",
+    "ZESTYYY BESTYYY :matthew:",
+    "I'm gonna Sett ult flash your pussy into the wall",
+    "you've been off your meds for too long now",
+    "YOU GO GURLLL YAAASSS SLAYYY QUEEN"
+  ],
+  "targeted_slurs": [
+    {
+      "member_id": "196921346838626313",
+      "member_name": "alain",
+      "slurs": []
+    },
+    {
+      "member_id": "560120652376440843",
+      "member_name": "ari",
+      "slurs": []
+    },
+    {
+      "member_id": "476071384993366032",
+      "member_name": "dia",
+      "slurs": []
+    },
+    {
+      "member_id": "379652658732204032",
+      "member_name": "elie",
+      "slurs": []
+    },
+    {
+      "member_id": "202771481174736896",
+      "member_name": "georges",
+      "slurs": []
+    },
+    {
+      "member_id": "877113420204343316",
+      "member_name": "helly",
+      "slurs": []
+    },
+    {
+      "member_id": "408628759181393932",
+      "member_name": "ilinca",
+      "slurs": []
+    },
+    {
+      "member_id": "263727783300038657",
+      "member_name": "maria",
+      "slurs": []
+    },
+    {
+      "member_id": "197438411357945860",
+      "member_name": "mario",
+      "slurs": []
+    },
+    {
+      "member_id": "618830352349134885",
+      "member_name": "moe",
+      "slurs": []
+    },
+    {
+      "member_id": "710991674201079901",
+      "member_name": "mathieu",
+      "slurs": []
+    },
+    {
+      "member_id": "195854110845566976",
+      "member_name": "ronald",
+      "slurs": []
+    },
+    {
+      "member_id": "202829170764414976",
+      "member_name": "roy",
+      "slurs": []
+    },
+    {
+      "member_id": "643765574815711233",
+      "member_name": "vicky",
+      "slurs": []
+    },
+    {
+      "member_id": "443062770737610753",
+      "member_name": "youssef",
+      "slurs": []
+    }
+  ]
 }

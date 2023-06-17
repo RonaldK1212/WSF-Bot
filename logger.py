@@ -1,14 +1,14 @@
 import config
 
-def is_running_log():
+# running_log
+async def running_log(client):
     running_message = f"**# Alyssa started running \nSession logs:**"
-    logging_channel = config.logging_channel_id
+    logging_channel = client.get_channel(config.logging_channel_id)
     if logging_channel:
-        return logging_channel.send(running_message)
-        
+        await logging_channel.send(running_message)
 
 # Slur reply log
-def slur_log(client, user_id, reply, random_number, base_chance, increment, reply_chance):
+async def slur_reply_log(client, user_id, reply, random_number, base_chance, increment, reply_chance):
     user_name = client.users_dict[user_id]
     slur_reply_log = (
         "**Slur reply log:**\n"
@@ -20,5 +20,5 @@ def slur_log(client, user_id, reply, random_number, base_chance, increment, repl
     )
     logging_channel = client.get_channel(config.logging_channel_id)
     if logging_channel:
-        return logging_channel.send(slur_reply_log)
+        await logging_channel.send(slur_reply_log)
         

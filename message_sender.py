@@ -45,7 +45,7 @@ async def send_random_slur(client, user_id, message):
             await message.reply(reply)
             
             # Logging the stats
-            logger.slur_reply_log(client, user_id, reply, random_number, base_chance, increment, reply_chance)
+            await logger.slur_reply_log(client, user_id, reply, random_number, base_chance, increment, reply_chance)
                    
         except FileNotFoundError:
             await message.channel.send("Error: Slurs file not found.")

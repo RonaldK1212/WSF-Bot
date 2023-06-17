@@ -24,19 +24,15 @@ class MyClient(discord.Client):
 
     async def on_ready(self):
         try:
-            if not self.synced:
+            if not client.synced:
                 await tree.sync(guild=guild)
-                self.synced = True
+                client.synced = True
                 print("Synced.")
-                print("Logged in as", self.user.name)
-                print("Client ID:", self.user.id)
+                print("Logged in as", client.user.name)
+                print("Client ID:", client.user.id)
                 print(f"Bot is now logging to channel {config.logging_channel_id}")
                 print("-----------------------------------")
-
-                running_message = f"**# Alyssa started running \nSession logs:**"
-                logging_channel = self.get_channel(config.logging_channel_id)
-                if logging_channel:
-                    await logging_channel.send(running_message)
+                await logger.running_log(client)
 
         except discord.ConnectionError:
             print("Failed to connect to Discord.")

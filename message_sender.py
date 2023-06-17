@@ -1,10 +1,12 @@
-import random
-import gpt
-import config
+# Import necessary libraries
 import os
 import sys
 import json
+import random
+import gpt
+import config
 
+# ChatGPT reply function
 async def send_chatgpt_reply(client, message):
     # If the message is a reply to the bot's message
     if message.reference and message.reference.resolved.author == client.user:
@@ -16,7 +18,9 @@ async def send_chatgpt_reply(client, message):
         response, _, _ = gpt.send_message([user_message], model="gpt-4")
     await message.channel.send(response)
 
+# Random slur reply function
 async def send_random_slur(client, user_id, message):
+    # Increment the spam count
     client.number_of_spammed_messages += 1
     # If the user ID of the previous message is different, reset the spam count
     if client.user_id_of_last_message and client.user_id_of_last_message != user_id:
@@ -44,10 +48,10 @@ async def send_random_slur(client, user_id, message):
             user_name = client.users_dict[user_id]
             slur_reply_log = (
                 "**Slur reply log:**\n"
-                f"Replied with '{reply}' to '{user_name}'\n"
+                f"Replied with **'{reply}'** to **'{user_name}'**\n"
                 f"Random number: {random_number}\n"
                 f"Reply chance: {base_chance} + {increment} * {client.number_of_spammed_messages - 1} = {reply_chance}%\n"
-                f"Number of spam messages sent before replying: {client.number_of_spammed_messages}\n"
+                f"Messages sent before replying: {client.number_of_spammed_messages}\n"
                 "------------------------------------------"
             )
             # Access the global logging channel ID

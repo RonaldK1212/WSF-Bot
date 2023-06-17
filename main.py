@@ -55,7 +55,7 @@ class MyClient(discord.Client):
                 print(f"Bot is now logging to channel {logging_channel_id}")
                 print('-----------------------------------')
 
-                running_message = f"**Alyssa started running :beeHappy: \nSession logs:**"
+                running_message = f"**# Alyssa started running \nSession logs:**"
                 # Access the global logging channel ID
                 logging_channel = self.get_channel(logging_channel_id)
                 if logging_channel:

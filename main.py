@@ -11,9 +11,9 @@ import gpt
 # Get the guild ID from the environment variables
 guild = discord.Object(id=os.getenv("GUILD_ID"))
 
-def initialize_user_dict(file = "users.json"):
+def initialize_user_dict():
     try:
-        with open(os.path.join(sys.path[0], file)) as f:
+        with open(os.path.join(sys.path[0], "users.json")) as f:
             users_file = json.load(f)
             users = users_file["users"]
         return users
@@ -29,8 +29,9 @@ class MyClient(discord.Client):
         # Initialize the client with the default intents
         super().__init__(intents=discord.Intents.default())
         self.synced = False
-        self.user_message = {}
-        self.users_dict = initialize_user_dict("users.json")       
+        self.users_dict = initialize_user_dict()    
+        self.user_id_of_last_message = None
+        self.number_of_spammed_messages = 0
 
     async def startup(self):
         # Wait until the client is ready
@@ -62,31 +63,30 @@ class MyClient(discord.Client):
 
         # Get the user ID of the current message
         user_id = message.author.id
-        user_name = self.users_dict[user_id]
         
         # ChatGPT reply
         if client.user in message.mentions and config.gpt_enabled:
-            # If the message is a reply to the bot's message
-            if message.reference and message.reference.resolved.author == self.user:
-                assistant_message = {"role": "assistant", "content": message.reference.resolved.content}
-                user_message = {"role": "user", "content": message.content}
-                response, _, _ = gpt.send_message([assistant_message, user_message], model="gpt-4")
-            else:
-                user_message = {"role": "user","content": message.content}
-                response, _, _ = gpt.send_message([user_message], model="gpt-4")
-            await message.channel.send(response)
-        
+            await self.send_chatgpt_reply(message)
         
         # Random slur reply
-        # Check if the user ID exists in the dictionary, if not, initialize the count to 0
-        if user_id not in self.user_message:
-            self.user_message[user_id] = 0
+        await self.send_random_slur(user_id, message)
 
-        # If the user ID of the previous message is different, reset the consecutive message count
-        previous_user_id = message.channel.last_message.author.id if message.channel.last_message else None
-        if previous_user_id == user_id:
-            # Increment the consecutive message count for the current user
-            self.user_message[user_id] += 1
+    async def send_chatgpt_reply(self, message):
+        # If the message is a reply to the bot's message
+        if message.reference and message.reference.resolved.author == self.user:
+            assistant_message = {"role": "assistant", "content": message.reference.resolved.content}
+            user_message = {"role": "user", "content": message.content}
+            response, _, _ = gpt.send_message([assistant_message, user_message], model="gpt-4")
+        else:
+            user_message = {"role": "user","content": message.content}
+            response, _, _ = gpt.send_message([user_message], model="gpt-4")
+        await message.channel.send(response)
+
+    async def send_random_slur(self, user_id, message):
+        self.number_of_spammed_messages += 1
+        # If the user ID of the previous message is different, reset the spam count
+        if self.user_id_of_last_message and self.user_id_of_last_message != user_id:
+            self.number_of_spammed_messages = 1
         
         # Generate a random number
         random_number = random.randint(1, 100)
@@ -94,20 +94,20 @@ class MyClient(discord.Client):
         # Randomness variables
         base_chance = 1
         increment = 2
-        reply_chance = base_chance + increment * (self.user_message[user_id] - 1)
+        reply_chance = base_chance + increment * (self.number_of_spammed_messages - 1)
 
         # If the random number is less than or equal to the current chance, reply with a random slur
         if random_number <= reply_chance:
             try:
                 # Open and load the slurs.json file
-                with open("WSF-Bot\\slurs.json") as f:
-                #with open(os.path.join(sys.path[0], "slurs.json")) as f:
+                with open(os.path.join(sys.path[0], "slurs.json")) as f:
                     slurs_file = json.load(f)
                     slurs = slurs_file["slurs"]
-                    reply = random.choice(slurs)
-                    await message.reply(reply)
+                reply = random.choice(slurs)
+                await message.reply(reply)
                 
                 # Logging the stats
+                user_name = self.users_dict[user_id]
                 print(f"Replied with '{reply}' to '{user_name}'")
                 print("Stats:")
                 print(f"Random number: {random_number}")
@@ -119,16 +119,12 @@ class MyClient(discord.Client):
                 await message.channel.send("Error: Slurs file not found.")
             except PermissionError:
                 await message.channel.send("Error: Insufficient permissions to access the slurs file.")
-            finally:
-                if 'f' in locals():
-                    f.close()
             
-            # Reset the messages count for the user
-                self.user_message[user_id] = 0
-
-        # Reset the dictionary if 2 different people are talking
-        if len(self.user_message) > 1:
-            self.user_message = {}
+            # Reset the spam count
+            self.number_of_spammed_messages = 0
+        
+        #Update the user id of the last message (for the next captured message)
+        self.user_id_of_last_message = user_id
 
 # Create an instance of the custom client
 client = MyClient()
@@ -147,8 +143,7 @@ async def commandName(interaction: discord.Interaction, member: discord.Member =
 async def commandName(interaction: discord.Interaction, word: str, description: str = "yes"):
     try:
         # Open and load the translator.json file
-        with open("WSF-Bot\\translator.json") as f:
-        #with open(os.path.join(sys.path[0], "slurs.json")) as f:
+        with open(os.path.join(sys.path[0], "translator.json")) as f:
             translator_data = json.load(f)
         
         # Search for the selected word in the translator data
@@ -178,9 +173,6 @@ async def commandName(interaction: discord.Interaction, word: str, description: 
         await interaction.response.send_message("Error: Insufficient permissions to access the translator file.")
     except KeyError:
         await interaction.response.send_message("Error: Word not found in the translator data.")
-    finally:
-        if 'f' in locals():
-            f.close()
 
 # Run the client with the bot token from the environment variables
 client.run(os.getenv("BOT_TOKEN"))

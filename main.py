@@ -1,5 +1,6 @@
 # Import necessary libraries
 import os
+import sys
 import discord
 import config
 from discord import app_commands
@@ -10,6 +11,18 @@ import gpt
 # Get the guild ID from the environment variables
 guild = discord.Object(id=os.getenv("GUILD_ID"))
 
+def initialize_user_dict(file = "users.json"):
+    try:
+        with open(os.path.join(sys.path[0], file)) as f:
+            users_file = json.load(f)
+            users = users_file["users"]
+        return users
+        
+    except FileNotFoundError:
+        print("Error: Users file not found.")
+    except PermissionError:
+        print("Error: Insufficient permissions to access the slurs file.")
+        
 # Define a custom client class
 class MyClient(discord.Client):
     def __init__(self):
@@ -17,6 +30,7 @@ class MyClient(discord.Client):
         super().__init__(intents=discord.Intents.default())
         self.synced = False
         self.user_message = {}
+        self.users_dict = initialize_user_dict("users.json")       
 
     async def startup(self):
         # Wait until the client is ready
@@ -28,9 +42,13 @@ class MyClient(discord.Client):
             if not self.synced:
                 await tree.sync(guild=guild)
                 self.synced = True
+                print(self.users_dict)
                 print("Synced.")
                 print("Bot is ready and connected.")
                 print(f"Logged on as {self.user}!")
+                print("------------------------------------------")
+                print("Logs:")
+                print()
                 
         except discord.ConnectionError:
             print("Failed to connect to Discord.")
@@ -44,6 +62,7 @@ class MyClient(discord.Client):
 
         # Get the user ID of the current message
         user_id = message.author.id
+        user_name = self.users_dict[user_id]
         
         # ChatGPT reply
         if client.user in message.mentions and config.gpt_enabled:
@@ -82,13 +101,14 @@ class MyClient(discord.Client):
             try:
                 # Open and load the slurs.json file
                 with open("WSF-Bot\\slurs.json") as f:
+                #with open(os.path.join(sys.path[0], "slurs.json")) as f:
                     slurs_file = json.load(f)
                     slurs = slurs_file["slurs"]
-                    await message.reply(random.choice(slurs))
+                    reply = random.choice(slurs)
+                    await message.reply(reply)
                 
                 # Logging the stats
-                print("------------------------------------------")
-                print(f"Replied to {user_id}")
+                print(f"Replied with '{reply}' to '{user_name}'")
                 print("Stats:")
                 print(f"Random number: {random_number}")
                 print(f"Messages sent: {self.user_message[user_id]}")
@@ -128,6 +148,7 @@ async def commandName(interaction: discord.Interaction, word: str, description: 
     try:
         # Open and load the translator.json file
         with open("WSF-Bot\\translator.json") as f:
+        #with open(os.path.join(sys.path[0], "slurs.json")) as f:
             translator_data = json.load(f)
         
         # Search for the selected word in the translator data

@@ -1,6 +1,7 @@
 # Import necessary libraries
 import os
 import discord
+import interactions
 import config
 from discord import app_commands
 import json
@@ -23,13 +24,19 @@ class MyClient(discord.Client):
         await self.wait_until_ready()
 
     async def on_ready(self):
-        # Sync the command tree with the guild when the client is ready
-        if not self.synced:
-            await tree.sync(guild=guild)
-            self.synced = True
-            print("Synced.")
-
-        print(f"Logged on as {self.user}!")
+        try:
+            # Sync the command tree with the guild when the client is ready
+            if not self.synced:
+                await tree.sync(guild=guild)
+                self.synced = True
+                print("Synced.")
+                print("Bot is ready and connected.")
+                print(f"Logged on as {self.user}!")
+                
+        except discord.ConnectionError:
+            print("Failed to connect to Discord.")
+        except Exception as e:
+            print(f"An error occurred during connection: {str(e)}")
     
     async def on_message(self, message):
         # Ignore messages sent by the bot itself
@@ -68,24 +75,29 @@ class MyClient(discord.Client):
 
         # Randomness variables
         base_chance = 1
-        increment = 3
+        increment = 2
         reply_chance = base_chance + increment * (self.user_message[user_id] - 1)
 
         # If the random number is less than or equal to the current chance, reply with a random slur
         if random_number <= reply_chance:
-            # Open and load the slurs.json file
-            with open("WSF-Bot\\slurs.json") as f:
-                slurs_file = json.load(f)
-            slurs = slurs_file["slurs"]
-            await message.reply(random.choice(slurs))
-            
-            # Close the slurs.json file
-            f.close()
+            try:
+                # Open and load the slurs.json file
+                with open("WSF-Bot\\slurs.json") as f:
+                    slurs_file = json.load(f)
+                    slurs = slurs_file["slurs"]
+                    await message.reply(random.choice(slurs))
+                
+            except FileNotFoundError:
+                await message.channel.send("Error: Slurs file not found.")
+            except PermissionError:
+                await message.channel.send("Error: Insufficient permissions to access the slurs file.")
+            finally:
+                if 'f' in locals():
+                    f.close()
             
             # Reset the messages count for the user
-            self.user_message[user_id] = 0
-            
-        
+                self.user_message[user_id] = 0
+
         # Reset the dictionary if 2 different people are talking
         if len(self.user_message) > 1:
             self.user_message = {}
@@ -105,29 +117,41 @@ async def commandName(interaction: discord.Interaction, member: discord.Member =
 # Translator command
 @tree.command(name="translator", description="Command description.", guild=guild)
 async def commandName(interaction: discord.Interaction, word: str, description: str = "yes"):
-    # Open and load the translator.json file
-    with open("WSF-Bot\\translator.json") as f:
-        translator_data = json.load(f)
-    
-    # Search for the selected word in the translator data
-    translation = None
-    for entry in translator_data["translator"]:
-        if entry["arabic"] == word:
-            translation = f'**Arabic:** *{entry["arabic"]}*\n**English:** *{entry["english"]}*'
-            break
-    
-    # Prepare the response message
-    response = translation
-    if description == "yes":
+    try:
+        # Open and load the translator.json file
+        with open("WSF-Bot\\translator.json") as f:
+            translator_data = json.load(f)
+        
+        # Search for the selected word in the translator data
+        translation = None
         for entry in translator_data["translator"]:
             if entry["arabic"] == word:
-                response += "\n\n" + entry["description"]
+                translation = f'**Arabic:** *{entry["arabic"]}*\n**English:** *{entry["english"]}*'
                 break
+        
+        # Prepare the response message
+        response = translation
+        if description == "yes":
+            for entry in translator_data["translator"]:
+                if entry["arabic"] == word:
+                    response += "\n\n" + entry["description"]
+                    break
+        # Check if the response is empty
+        if response:
+            # Send the response message
+            await interaction.response.send_message(response)
+        else:
+            await interaction.response.send_message("No translation found.")
     
-    # Send the response message
-    await interaction.response.send_message(response)
-    # Close the translator.json file
-    f.close()
+    except FileNotFoundError:
+        await interaction.response.send_message("Error: Translator file not found.")
+    except PermissionError:
+        await interaction.response.send_message("Error: Insufficient permissions to access the translator file.")
+    except KeyError:
+        await interaction.response.send_message("Error: Word not found in the translator data.")
+    finally:
+        if 'f' in locals():
+            f.close()
 
 # Run the client with the bot token from the environment variables
 client.run(os.getenv("BOT_TOKEN"))

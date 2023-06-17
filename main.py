@@ -5,14 +5,10 @@ import discord
 import config
 from discord import app_commands
 import json
-import random
-import gpt
+import message_sender
 
 # Get the guild ID from the environment variables
 guild = discord.Object(id=os.getenv("GUILD_ID"))
-
-# Get the channel ID for logging
-logging_channel_id = 1119603422866440202
 
 def initialize_user_dict():
     try:
@@ -37,7 +33,7 @@ class MyClient(discord.Client):
         self.synced = False
         self.users_dict = initialize_user_dict()    
         self.user_id_of_last_message = None
-        self.number_of_spammed_messages = 1
+        self.number_of_spammed_messages = 0
 
     async def startup(self):
         # Wait until the client is ready
@@ -52,12 +48,12 @@ class MyClient(discord.Client):
                 print("Synced.")
                 print('Logged in as', self.user.name)
                 print('Client ID:', self.user.id)
-                print(f"Bot is now logging to channel {logging_channel_id}")
+                print(f"Bot is now logging to channel {config.logging_channel_id}")
                 print('-----------------------------------')
 
                 running_message = f"**# Alyssa started running \nSession logs:**"
                 # Access the global logging channel ID
-                logging_channel = self.get_channel(logging_channel_id)
+                logging_channel = self.get_channel(config.logging_channel_id)
                 if logging_channel:
                     await logging_channel.send(running_message)
                 
@@ -76,72 +72,10 @@ class MyClient(discord.Client):
         
         # ChatGPT reply
         if client.user in message.mentions and config.gpt_enabled:
-            await self.send_chatgpt_reply(message)
+            await message_sender.send_chatgpt_reply(self, message)
         
         # Random slur reply
-        await self.send_random_slur(user_id, message)
-
-    async def send_chatgpt_reply(self, message):
-        # If the message is a reply to the bot's message
-        if message.reference and message.reference.resolved.author == self.user:
-            assistant_message = {"role": "assistant", "content": message.reference.resolved.content}
-            user_message = {"role": "user", "content": message.content}
-            response, _, _ = gpt.send_message([assistant_message, user_message], model="gpt-4")
-        else:
-            user_message = {"role": "user","content": message.content}
-            response, _, _ = gpt.send_message([user_message], model="gpt-4")
-        await message.channel.send(response)
-
-    async def send_random_slur(self, user_id, message):
-        self.number_of_spammed_messages += 1
-        # If the user ID of the previous message is different, reset the spam count
-        if self.user_id_of_last_message and self.user_id_of_last_message != user_id:
-            self.number_of_spammed_messages = 1
-        
-        # Generate a random number
-        random_number = random.randint(1, 100)
-
-        # Randomness variables
-        base_chance = 1
-        increment = 2
-        reply_chance = base_chance + increment * (self.number_of_spammed_messages - 1)
-
-        # If the random number is less than or equal to the current chance, reply with a random slur
-        if random_number <= reply_chance:
-            try:
-                # Open and load the slurs.json file
-                with open(os.path.join(sys.path[0], "slurs.json")) as f:
-                    slurs_file = json.load(f)
-                    slurs = slurs_file["slurs"]
-                reply = random.choice(slurs)
-                await message.reply(reply)
-                
-                # Logging the stats
-                user_name = self.users_dict[user_id]
-                slur_reply_log = (
-                    "**Slur reply log:**\n"
-                    f"Replied with **'{reply}'** to **'{user_name}'**\n"
-                    "Stats:\n"
-                    f"Random number: {random_number}\n"
-                    f"Messages sent: {self.number_of_spammed_messages}\n"
-                    f"Reply chance: {base_chance} + {increment} * {self.number_of_spammed_messages - 1} = {reply_chance}%\n"
-                    "------------------------------------------"
-                )
-                # Access the global logging channel ID
-                logging_channel = self.get_channel(logging_channel_id)
-                if logging_channel:
-                    await logging_channel.send(slur_reply_log)
-                 
-            except FileNotFoundError:
-                await message.channel.send("Error: Slurs file not found.")
-            except PermissionError:
-                await message.channel.send("Error: Insufficient permissions to access the slurs file.")
-            
-            # Reset the spam count
-            self.number_of_spammed_messages = 1
-        
-        # Update the user id of the last message (for the next captured message)
-        self.user_id_of_last_message = user_id
+        await message_sender.send_random_slur(self, user_id, message)
 
 # Create an instance of the custom client
 client = MyClient()

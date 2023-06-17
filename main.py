@@ -1,7 +1,6 @@
 # Import necessary libraries
 import os
 import discord
-import interactions
 import config
 from discord import app_commands
 import json
@@ -87,6 +86,15 @@ class MyClient(discord.Client):
                     slurs = slurs_file["slurs"]
                     await message.reply(random.choice(slurs))
                 
+                # Logging the stats
+                print("------------------------------------------")
+                print(f"Replied to {user_id}")
+                print("Stats:")
+                print(f"Random number: {random_number}")
+                print(f"Messages sent: {self.user_message[user_id]}")
+                print(f"Reply chance: {base_chance} + {increment} * {self.user_message[user_id] - 1} = {reply_chance}%")
+                print("------------------------------------------")
+                 
             except FileNotFoundError:
                 await message.channel.send("Error: Slurs file not found.")
             except PermissionError:

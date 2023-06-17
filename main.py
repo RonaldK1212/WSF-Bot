@@ -11,6 +11,9 @@ import gpt
 # Get the guild ID from the environment variables
 guild = discord.Object(id=os.getenv("GUILD_ID"))
 
+# Get the channel ID for logging
+logging_channel_id = 1119603422866440202
+
 def initialize_user_dict():
     try:
         with open(os.path.join(sys.path[0], "users.json")) as f:
@@ -34,7 +37,7 @@ class MyClient(discord.Client):
         self.synced = False
         self.users_dict = initialize_user_dict()    
         self.user_id_of_last_message = None
-        self.number_of_spammed_messages = 0
+        self.number_of_spammed_messages = 1
 
     async def startup(self):
         # Wait until the client is ready
@@ -46,13 +49,17 @@ class MyClient(discord.Client):
             if not self.synced:
                 await tree.sync(guild=guild)
                 self.synced = True
-                print(self.users_dict)
                 print("Synced.")
-                print("Bot is ready and connected.")
-                print(f"Logged on as {self.user}!")
-                print("------------------------------------------")
-                print("Logs:")
-                print()
+                print('Logged in as', self.user.name)
+                print('Client ID:', self.user.id)
+                print(f"Bot is now logging to channel {logging_channel_id}")
+                print('-----------------------------------')
+
+                running_message = f"**Alyssa started running :bee_happy: \nSession logs:**"
+                # Access the global logging channel ID
+                logging_channel = self.get_channel(logging_channel_id)
+                if logging_channel:
+                    await logging_channel.send(running_message)
                 
         except discord.ConnectionError:
             print("Failed to connect to Discord.")
@@ -95,7 +102,7 @@ class MyClient(discord.Client):
         random_number = random.randint(1, 100)
 
         # Randomness variables
-        base_chance = 1
+        base_chance = 100
         increment = 2
         reply_chance = base_chance + increment * (self.number_of_spammed_messages - 1)
 
@@ -111,11 +118,19 @@ class MyClient(discord.Client):
                 
                 # Logging the stats
                 user_name = self.users_dict[user_id]
-                print(f"Replied with '{reply}' to '{user_name}'")
-                print(f"Random number: {random_number}")
-                print(f"Reply chance: {base_chance} + {increment} * {self.number_of_spammed_messages - 1} = {reply_chance}%")
-                print(f"Number of spam messages sent before replying: {self.number_of_spammed_messages}")
-                print("------------------------------------------")
+                slur_reply_log = (
+                    "**Slur reply log:**\n"
+                    f"Replied with '{reply}' to '{user_name}'\n"
+                    "Stats:\n"
+                    f"Random number: {random_number}\n"
+                    f"Messages sent: {self.number_of_spammed_messages}\n"
+                    f"Reply chance: {base_chance} + {increment} * {self.number_of_spammed_messages - 1} = {reply_chance}%\n"
+                    "------------------------------------------"
+                )
+                # Access the global logging channel ID
+                logging_channel = self.get_channel(logging_channel_id)
+                if logging_channel:
+                    await logging_channel.send(slur_reply_log)
                  
             except FileNotFoundError:
                 await message.channel.send("Error: Slurs file not found.")
@@ -123,9 +138,9 @@ class MyClient(discord.Client):
                 await message.channel.send("Error: Insufficient permissions to access the slurs file.")
             
             # Reset the spam count
-            self.number_of_spammed_messages = 0
+            self.number_of_spammed_messages = 1
         
-        #Update the user id of the last message (for the next captured message)
+        # Update the user id of the last message (for the next captured message)
         self.user_id_of_last_message = user_id
 
 # Create an instance of the custom client
